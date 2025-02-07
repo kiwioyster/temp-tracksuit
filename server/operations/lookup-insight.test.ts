@@ -1,7 +1,7 @@
 import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
 import { expect } from "jsr:@std/expect";
 import { withDB } from "../testing.ts";
-import type { Insight } from "$models/insight.ts";
+import type { Insight } from "../../shared/schemas/insight.ts";
 import lookupInsight from "./lookup-insight.ts";
 
 describe("listing insights in the database", () => {

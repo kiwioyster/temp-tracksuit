@@ -78,3 +78,10 @@ engineering team at Suit Tracker from ~~5~~ 4 engineers to 20.
 
 In your opinion, what are we missing that would enable us to scale the team out
 and collaborate on this codebase more effectively?
+
+- state management
+- monitoring tools, metric, trace, logs, sre
+- lint, prettier, precommit hooks, styling consistency
+- documentation, api docs swagger/open api
+- cicd pipelines, tests
+- consider architecture & team structure, Conway's Law
