@@ -6,11 +6,13 @@ shouldn't take very long — if it takes more than a few hours you're
 over-thinking it!
 
 <!-- deno-fmt-ignore-start -->
-> [!Note] 
+
+> [!Note]
 > This task is meant to give us something to talk over in your technical
 > interview. It should feel similar to the kind of day-to-day work you're used
 > to doing. We're not trying to trick you with something that requires fancy
 > algorithms to solve.
+
 <!-- deno-fmt-ignore-end -->
 
 ## Background
@@ -57,7 +59,7 @@ So, we need you to:
 
 2. Complete the missing frontend integrations with those new endpoints
 
-3. Fix any bug Chuggs might have missed 
+3. Fix any bug Chuggs might have missed
 
 4. Read through and understand the implementation pretty well, since you'll be
    maintaining this code
@@ -66,7 +68,7 @@ Do it for Chuggs.
 
 ## Extra For Experts (or Seniors)
 
-Our eccentric American investor tells us that we'll unlock a huge finding
+Our eccentric American investor tells us that we'll unlock a huge funding
 milestone if we get this Insights feature working--they will personally
 helicopter us a briefcase of sequentially-numbered USD bills for our next
 funding round if we can pull this off.

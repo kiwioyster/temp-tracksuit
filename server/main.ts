@@ -31,7 +31,7 @@ router.get("/_health", (ctx) => {
 router.get("/insights", (ctx) => {
   const result = listInsights({ db });
   ctx.response.body = result;
-  ctx.response.body = 200;
+  ctx.response.status = 200;
 });
 
 router.get("/insights/:id", (ctx) => {
@@ -41,11 +41,11 @@ router.get("/insights/:id", (ctx) => {
   ctx.response.status = 200;
 });
 
-router.get("/insights/create", (ctx) => {
+router.post("/insights/create", (ctx) => {
   // TODO
 });
 
-router.get("/insights/delete", (ctx) => {
+router.delete("/insights/:id", (ctx) => {
   // TODO
 });
 
