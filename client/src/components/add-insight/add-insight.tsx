@@ -66,3 +66,4 @@ export const AddInsight = ({ onSuccess, ...props }: AddInsightProps) => {
     </Modal>
   );
 };
+// validation of input, loading state

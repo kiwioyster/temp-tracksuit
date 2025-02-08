@@ -79,21 +79,24 @@ engineering team at Suit Tracker from ~~5~~ 4 engineers to 20.
 In your opinion, what are we missing that would enable us to scale the team out
 and collaborate on this codebase more effectively?
 
-- state management (if it gets larger)
-- login on FE, authz, authn for api endpoints
-- abstract out api services from components (handle api errors, loading states, etc)
+team scaling considerations
+
 - monitoring tools, metric, trace, logs, sre
-- lint, prettier, precommit hooks, styling consistency
+- lint, prettier, precommit hooks, styling consistency, test coverage
 - documentation, api docs swagger/open api
-- abstract out main.ts endpoints to controllers
 - cicd pipelines, tests
 - consider architecture & team structure, Conway's Law
 - microservices architecture, separate FE & BE, api gateway
+- storybook,
+- code review process, pr, coding standards docs, branching strategy, automation with jira or similar tools
 - improve directory structure
 
-other notes
-
-- file naming is wrong, confusing names, lots of files called insight
-
-- storybook, e2e testing, react error boundary, code review process, pr, coding standards docs, input sanitation on adding insights
+code improvements
+- state management (if it gets larger)
+- login on FE, authz, authn for api endpoints
+- abstract out api services from components (handle api errors, loading states, etc)
+- abstract out main.ts endpoints to controllers
+- file naming is wrong use camelCase, confusing names, lots of files called insight
+- pagination of insights list
+- e2e testing, react error boundary,  input sanitation on adding insights
 - implement as needed, follow yagni principle

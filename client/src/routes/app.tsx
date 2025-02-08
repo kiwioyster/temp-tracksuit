@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import { Header } from '../components/header/header.tsx';
 import { Insights } from '../components/insights/insights.tsx';
 import styles from './app.module.css';
-import type { Insight } from '../../../shared/schemas/insight.ts';
+import { InsightType } from '../types/Insight';
 
 export const App = () => {
-  const [insights, setInsights] = useState<Insight[]>([]);
+  const [insights, setInsights] = useState<InsightType[]>([]);
 
   const fetchInsights = async () => {
     const response = await fetch('/api/insights');
@@ -29,5 +29,5 @@ export const App = () => {
   );
 };
 
-// Interview note - not sure why app tsx is under routes.
+// Interview note - not sure why app tsx is under routes. theres no routing and not a nextjs app.
 // ran out of time to add tests for the app.tsx
