@@ -81,14 +81,19 @@ and collaborate on this codebase more effectively?
 
 - state management (if it gets larger)
 - login on FE, authz, authn for api endpoints
-- abstract out api services from components
+- abstract out api services from components (handle api errors, loading states, etc)
 - monitoring tools, metric, trace, logs, sre
 - lint, prettier, precommit hooks, styling consistency
 - documentation, api docs swagger/open api
-- abstract out main.ts endpoints
+- abstract out main.ts endpoints to controllers
 - cicd pipelines, tests
 - consider architecture & team structure, Conway's Law
+- microservices architecture, separate FE & BE, api gateway
+- improve directory structure
 
 other notes
 
 - file naming is wrong, confusing names, lots of files called insight
+
+- storybook, e2e testing, react error boundary, code review process, pr, coding standards docs, input sanitation on adding insights
+- implement as needed, follow yagni principle

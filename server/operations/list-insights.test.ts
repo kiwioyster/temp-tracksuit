@@ -1,6 +1,6 @@
 import { expect } from "jsr:@std/expect";
 import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
-import type { Insight } from "../../shared/schemas/insight.ts";
+import type { Insight } from "../models/insight.ts";
 import { withDB } from "../testing.ts";
 import listInsights from "./list-insights.ts";
 

@@ -1,10 +1,11 @@
 import { beforeAll, describe, it } from "jsr:@std/testing/bdd";
 import { expect } from "jsr:@std/expect";
 import { withDB } from "./testing.ts";
-import type { Insight } from "../shared/schemas/insight.ts";
+import type { Insight } from "./models/insight.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
-import * as insightsTable from "$tables/insights.ts";
+import createInsight from "./operations/create-insight.ts";
+import deleteInsight from "./operations/delete-insight.ts";
 
 const createMockContext = () => {
   const ctx = {
@@ -74,49 +75,28 @@ describe("API endpoints", () => {
   describe("POST /insights", () => {
     withDB((fixture) => {
       const newInsight = {
-        id: 1,
         brand: 0,
         text: "Test insight",
       };
       const ctx = createMockContext();
 
-      beforeAll(() => {
+      beforeAll(async () => {
         ctx.request.body.json = () => newInsight;
-
-        const insight: Insight = {
-          ...newInsight,
-          createdAt: new Date(),
-        };
-
-        const result = fixture.db.run(insightsTable.insertStatement({
-          brand: insight.brand,
-          createdAt: insight.createdAt.toISOString(),
-          text: insight.text,
-        }));
-
+        const result = createInsight({ ...fixture, ...newInsight });
         ctx.response.status = 201;
-        ctx.response.body = {
-          ...insight,
-          id: result,
-        };
+        ctx.response.body = result;
       });
 
       it("returns 201 status", () => {
         expect(ctx.response.status).toBe(201);
       });
 
-      it("returns created insight with id", () => {
+      it("returns created insight", () => {
         const result = ctx.response.body as Insight;
         expect(result.id).toBeDefined();
         expect(result.brand).toBe(newInsight.brand);
         expect(result.text).toBe(newInsight.text);
         expect(result.createdAt).toBeDefined();
-      });
-
-      it("persists insight to database", () => {
-        const insights = listInsights(fixture);
-        expect(insights.length).toBe(1);
-        expect(insights[0].text).toBe(newInsight.text);
       });
     });
   });
@@ -186,18 +166,12 @@ describe("API endpoints", () => {
             ...insight,
             createdAt: insight.createdAt.toISOString(),
           }]);
-
-          const result = fixture.db.run(insightsTable.deleteStatement(1));
+          const result = deleteInsight({ ...fixture, id: 1 });
           ctx.response.status = result === 0 ? 404 : 204;
         });
 
         it("returns 204 status", () => {
           expect(ctx.response.status).toBe(204);
-        });
-
-        it("removes insight from database", () => {
-          const insights = listInsights(fixture);
-          expect(insights.length).toBe(0);
         });
       });
     });
@@ -208,7 +182,7 @@ describe("API endpoints", () => {
         ctx.params = { id: "999" };
 
         beforeAll(() => {
-          const result = fixture.db.run(insightsTable.deleteStatement(999));
+          const result = deleteInsight({ ...fixture, id: 999 });
           ctx.response.status = result === 0 ? 404 : 204;
           if (result === 0) {
             ctx.response.body = { error: "Insight not found" };

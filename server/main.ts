@@ -5,8 +5,8 @@ import * as path from "@std/path";
 import { Port } from "../lib/utils/index.ts";
 import listInsights from "./operations/list-insights.ts";
 import lookupInsight from "./operations/lookup-insight.ts";
-import * as insightsTable from "$tables/insights.ts";
-import { Insight } from "../shared/schemas/insight.ts";
+import createInsight from "./operations/create-insight.ts";
+import deleteInsight from "./operations/delete-insight.ts";
 
 console.log("Loading configuration");
 
@@ -46,23 +46,14 @@ router.get("/insights/:id", (ctx) => {
 router.post("/insights", async (ctx) => {
   try {
     const body = await ctx.request.body.json();
-
-    const insight: Insight = {
-      ...body,
-      createdAt: new Date(),
-    };
-
-    const result = db.run(insightsTable.insertStatement({
-      brand: insight.brand,
-      createdAt: insight.createdAt.toISOString(),
-      text: insight.text,
-    }));
-
+    const result = createInsight({ 
+      db,
+      brand: body.brand,
+      text: body.text
+    });
+    
     ctx.response.status = 201;
-    ctx.response.body = {
-      ...insight,
-      id: result,
-    };
+    ctx.response.body = result;
   } catch (error) {
     console.error("Failed to create insight:", error);
     ctx.response.status = 400;
@@ -73,7 +64,7 @@ router.post("/insights", async (ctx) => {
 router.delete("/insights/:id", (ctx) => {
   try {
     const id = Number(ctx.params.id);
-    const result = db.run(insightsTable.deleteStatement(id));
+    const result = deleteInsight({ db, id });
 
     if (result === 0) {
       ctx.response.status = 404;
@@ -88,6 +79,8 @@ router.delete("/insights/:id", (ctx) => {
     ctx.response.body = { error };
   }
 });
+
+// request handlers move to controller directory
 
 const app = new oak.Application();
 

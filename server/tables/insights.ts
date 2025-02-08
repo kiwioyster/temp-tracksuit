@@ -21,7 +21,13 @@ export type Insert = {
 };
 
 export const insertStatement = (item: Insert) =>
-  `INSERT INTO insights (brand, createdAt, text) VALUES (${item.brand}, '${item.createdAt}', '${item.text}')`;
+  [`INSERT INTO insights (brand, createdAt, text) VALUES (?, ?, ?)`, [
+    item.brand,
+    item.createdAt,
+    item.text,
+  ]] as const;
 
 export const deleteStatement = (id: number) =>
-  `DELETE FROM insights WHERE id = ${id}`;
+  [`DELETE FROM insights WHERE id = ?`, [id]] as const;
+
+// can probably infer the Row type from schema, but need to replace createAt with string
