@@ -1,11 +1,15 @@
-import { useState } from "react";
-import { Button } from "../button/button.tsx";
-import styles from "./header.module.css";
-import { AddInsight } from "../add-insight/add-insight.tsx";
+import { useState } from 'react';
+import { Button } from '../button/button.tsx';
+import styles from './header.module.css';
+import { AddInsight } from '../add-insight/add-insight.tsx';
 
-export const HEADER_TEXT = "Suit Tracker Insights";
+export const HEADER_TEXT = 'Suit Tracker Insights';
 
-export const Header = () => {
+type HeaderProps = {
+  onInsightAdded?: () => void;
+};
+
+export const Header = ({ onInsightAdded }: HeaderProps) => {
   const [addInsightOpen, setAddInsightOpen] = useState(false);
 
   return (
@@ -14,8 +18,8 @@ export const Header = () => {
         <div className={styles.inner}>
           <span className={styles.logo}>{HEADER_TEXT}</span>
           <Button
-            label="Add insight"
-            theme="secondary"
+            label='Add insight'
+            theme='secondary'
             onClick={() => setAddInsightOpen(true)}
           />
         </div>
@@ -23,6 +27,10 @@ export const Header = () => {
       <AddInsight
         open={addInsightOpen}
         onClose={() => setAddInsightOpen(false)}
+        onSuccess={() => {
+          onInsightAdded?.();
+          setAddInsightOpen(false);
+        }}
       />
     </>
   );

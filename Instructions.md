@@ -83,5 +83,10 @@ and collaborate on this codebase more effectively?
 - monitoring tools, metric, trace, logs, sre
 - lint, prettier, precommit hooks, styling consistency
 - documentation, api docs swagger/open api
+- abstract out main.ts endpoints
 - cicd pipelines, tests
 - consider architecture & team structure, Conway's Law
+
+other notes
+
+- file naming is wrong, confusing names, lots of files called insight
