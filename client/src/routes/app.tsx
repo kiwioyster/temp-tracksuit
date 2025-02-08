@@ -20,7 +20,14 @@ export const App = () => {
   return (
     <main className={styles.main}>
       <Header onInsightAdded={fetchInsights} />
-      <Insights className={styles.insights} insights={insights} />
+      <Insights
+        className={styles.insights}
+        insights={insights}
+        onRefresh={fetchInsights}
+      />
     </main>
   );
 };
+
+// Interview note - not sure why app tsx is under routes.
+// ran out of time to add tests for the app.tsx

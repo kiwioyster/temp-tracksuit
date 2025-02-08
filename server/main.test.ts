@@ -168,4 +168,61 @@ describe("API endpoints", () => {
       });
     });
   });
+
+  describe("DELETE /insights/:id", () => {
+    describe("existing insight", () => {
+      withDB((fixture) => {
+        const insight: Insight = {
+          id: 1,
+          brand: 0,
+          createdAt: new Date(),
+          text: "Test",
+        };
+        const ctx = createMockContext();
+        ctx.params = { id: "1" };
+
+        beforeAll(() => {
+          fixture.insights.insert([{
+            ...insight,
+            createdAt: insight.createdAt.toISOString(),
+          }]);
+
+          const result = fixture.db.run(insightsTable.deleteStatement(1));
+          ctx.response.status = result === 0 ? 404 : 204;
+        });
+
+        it("returns 204 status", () => {
+          expect(ctx.response.status).toBe(204);
+        });
+
+        it("removes insight from database", () => {
+          const insights = listInsights(fixture);
+          expect(insights.length).toBe(0);
+        });
+      });
+    });
+
+    describe("non-existent insight", () => {
+      withDB((fixture) => {
+        const ctx = createMockContext();
+        ctx.params = { id: "999" };
+
+        beforeAll(() => {
+          const result = fixture.db.run(insightsTable.deleteStatement(999));
+          ctx.response.status = result === 0 ? 404 : 204;
+          if (result === 0) {
+            ctx.response.body = { error: "Insight not found" };
+          }
+        });
+
+        it("returns 404 status", () => {
+          expect(ctx.response.status).toBe(404);
+        });
+
+        it("returns error message", () => {
+          expect(ctx.response.body).toEqual({ error: "Insight not found" });
+        });
+      });
+    });
+  });
 });

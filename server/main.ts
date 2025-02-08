@@ -71,7 +71,22 @@ router.post("/insights", async (ctx) => {
 });
 
 router.delete("/insights/:id", (ctx) => {
-  // TODO
+  try {
+    const id = Number(ctx.params.id);
+    const result = db.run(insightsTable.deleteStatement(id));
+
+    if (result === 0) {
+      ctx.response.status = 404;
+      ctx.response.body = { error: "Insight not found" };
+      return;
+    }
+
+    ctx.response.status = 204;
+  } catch (error) {
+    console.error("Failed to delete insight:", error);
+    ctx.response.status = 400;
+    ctx.response.body = { error };
+  }
 });
 
 const app = new oak.Application();
